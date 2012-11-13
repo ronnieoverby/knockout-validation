@@ -93,9 +93,9 @@ ko.extenders.validations = function (target, validations) {
 */
 ko.bindingHandlers.validation = {
     init: function (element, valueAccessor, allBindingsAccessor) {
-        $(element).blur(function () {
+        ko.utils.registerEventHandler(element, 'blur', function () {
             allBindingsAccessor().validation.hadFocus(true);
-        });
+        }); ;
     }
 };
 
