@@ -32,13 +32,13 @@
             }
         },
 
-        gt: function (value, opts) {
+        min: function (value, opts) {
             if (!value)
                 return;
 
             var n = parseFloat(value);
-            if (!n || n <= opts.value)
-                return opts.message || 'Must be greater than ' + opts.value;
+            if (!n || n < opts.value)
+                return opts.message || 'Must be at least ' + opts.value;
         }
     };
 
@@ -110,35 +110,35 @@ ko.bindingHandlers.validation = {
     valContainer.isValid();     // ko.computed boolean (does cause validation)
     valContainer.forEachObservable(function(observable)); // do something with each observable
 */
-ko.makeValidationContainer = function (validatedObservables) {
+ko.createValidationGroup = function (validatedObservables) {
 
-    var container = {
+    var group = {
         observables: validatedObservables
     };
 
-    container.forEachObservable = function (action) {
-        for (var i = 0; i < container.observables.length; i++) {
-            action(container.observables[i]);
+    group.forEachObservable = function (action) {
+        for (var i = 0; i < group.observables.length; i++) {
+            action(group.observables[i]);
         }
     };
 
-    container.clearErrors = function () {
-        container.forEachObservable(function (o) { o.hadFocus(false); });
+    group.clearErrors = function () {
+        group.forEachObservable(function (o) { o.hadFocus(false); });
     };
 
-    container.allErrors = ko.computed(function() {
+    group.allErrors = ko.computed(function () {
         var errors = [];
-        container.forEachObservable(function(o) {
+        group.forEachObservable(function (o) {
             var err = o.errorMessage();
             if (err) errors.push(err);
         });
         return errors;
     });
 
-    container.isValid = ko.computed({
+    group.isValid = ko.computed({
         read: function () {
             var result = true;
-            container.forEachObservable(function (o) {
+            group.forEachObservable(function (o) {
                 o.hadFocus(true);
                 if (o.hasError()) result = false;
             });
@@ -147,5 +147,5 @@ ko.makeValidationContainer = function (validatedObservables) {
         deferEvaluation: true
     });
 
-    return container;
+    return group;
 };

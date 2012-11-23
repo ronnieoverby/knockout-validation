@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Knockout Validation Test</title>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <fieldset class="form-horizontal">
+            <legend>Fill out this form!</legend>
+
+            <div class="control-group" data-bind="css: { error: name.hasError}">
+                <label class="control-label" for="name">Name</label>
+                <div class="controls">
+                    <input type="text" id="name" data-bind="value: name, validation: name, valueUpdate: 'afterkeydown'" />
+                    <p class="help-inline" data-bind="text: name.errorMessage"></p>
+                </div>
+            </div>
+
+            <div class="control-group" data-bind="css: { error: age.hasError}">
+                <label class="control-label" for="age">Age</label>
+                <div class="controls">
+                    <input type="text" id="age" data-bind="value: age, validation: age, valueUpdate: 'afterkeydown'" />
+                    <p class="help-inline" data-bind="text: age.errorMessage"></p>
+                </div>
+            </div>
+
+            <div class="control-group" data-bind="css: { error: gender.hasError}">
+                <label class="control-label">Gender</label>
+                <div class="controls">
+                    <label class="radio">
+                        Male
+                        <input type="radio" name="gender" value="Male" data-bind="checked: gender, validation: gender" /></label>
+
+                    <label class="radio">
+                        Female
+                    <input type="radio" name="gender" id="genderFemale" value="Female" data-bind="checked: gender, validation: gender" /></label>
+                    <p class="help-block" data-bind="text: gender.errorMessage"></p>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn" data-bind="click: ok">Okay</button>
+            </div>
+
+        </fieldset>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script src="ko.validation.js"></script>
+    <script src="test.js"></script>
+</body>
+</html>
